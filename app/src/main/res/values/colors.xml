@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_dark">#0F172A</color>
+    <color name="accent_indigo">#6366F1</color>
+    <color name="accent_indigo_dark">#4338CA</color>
+    <color name="element_dark">#1E293B</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_slate">#94A3B8</color>
+    <color name="rating_gold">#F59E0B</color>
+    <color name="border_slate">#334155</color>
+</resources>
