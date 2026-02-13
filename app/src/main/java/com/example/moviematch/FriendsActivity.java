@@ -3,6 +3,7 @@ package com.example.moviematch;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,14 +12,43 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Подключаем твой макет друзей
         setContentView(R.layout.friends);
 
         setupBottomNavigation();
+        setupRoomButtons();
+    }
+
+    private void setupRoomButtons() {
+        View btnCreateRoom = findViewById(R.id.btn_create_room);
+        View btnJoinRoom = findViewById(R.id.btn_join_room);
+        EditText inputRoomCode = findViewById(R.id.input_room_code);
+
+        // Логика СОЗДАНИЯ новой комнаты
+        if (btnCreateRoom != null) {
+            btnCreateRoom.setOnClickListener(v -> {
+                Intent intent = new Intent(FriendsActivity.this, LobbyActivity.class);
+                startActivity(intent);
+            });
+        }
+
+        // Логика ВХОДА в существующую комнату
+        if (btnJoinRoom != null && inputRoomCode != null) {
+            btnJoinRoom.setOnClickListener(v -> {
+                String code = inputRoomCode.getText().toString().trim();
+                if (code.length() < 5) {
+                    Toast.makeText(this, "Введите корректный код (5 цифр)", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Передаем введенный код в лобби
+                Intent intent = new Intent(FriendsActivity.this, LobbyActivity.class);
+                intent.putExtra("ROOM_CODE", code);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupBottomNavigation() {
-        // Ищем элементы нижней панели (предполагается, что в friends.xml у тебя та же панель, что и в profile.xml)
         View navSwipe = findViewById(R.id.nav_swipe_action);
         View navProfile = findViewById(R.id.nav_profile);
         View navFriends = findViewById(R.id.nav_friends);
@@ -26,7 +56,7 @@ public class FriendsActivity extends AppCompatActivity {
         if (navSwipe != null) {
             navSwipe.setOnClickListener(v -> {
                 Intent intent = new Intent(this, SwipeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT); // Возвращаемся к свайпам
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             });
         }
@@ -34,14 +64,14 @@ public class FriendsActivity extends AppCompatActivity {
         if (navProfile != null) {
             navProfile.setOnClickListener(v -> {
                 Intent intent = new Intent(this, ProfileActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT); // Переходим в профиль
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             });
         }
 
         if (navFriends != null) {
             navFriends.setOnClickListener(v -> {
-                Toast.makeText(this, "Ты уже во вкладке Друзья!", Toast.LENGTH_SHORT).show();
+                // Ничего не делаем, мы уже тут
             });
         }
     }
