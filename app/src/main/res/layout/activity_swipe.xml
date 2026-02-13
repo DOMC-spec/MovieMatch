@@ -61,7 +61,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
+    <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/card_stack"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -69,28 +69,7 @@
         app:layout_constraintBottom_toTopOf="@+id/actions_row"
         app:layout_constraintHeight_percent="0.65"
         app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintVertical_bias="0.45">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="-15dp"
-            android:alpha="0.6"
-            app:cardBackgroundColor="@color/element_dark"
-            app:cardCornerRadius="28dp"
-            app:cardElevation="0dp" />
-
-        <include
-            layout="@layout/item_swipe_card"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="32dp" />
-
-    </FrameLayout>
+        app:layout_constraintVertical_bias="0.45" />
 
     <LinearLayout
         android:id="@+id/actions_row"

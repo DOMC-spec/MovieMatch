@@ -194,8 +194,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-10dp"
-                android:layout_marginBottom="25dp"
-                android:justifyContent="space-between">
+                android:layout_marginBottom="25dp">
                 <TextView android:text="1970" android:textColor="#64748B" android:textSize="12sp"/>
                 <TextView android:text="2024" android:textColor="#64748B" android:textSize="12sp"/>
             </LinearLayout>
