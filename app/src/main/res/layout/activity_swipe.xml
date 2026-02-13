@@ -107,7 +107,7 @@
             android:layout_height="60dp"
             android:background="@drawable/bg_circle_btn_dislike"
             android:src="@drawable/ic_close"
-            android:tint="#EF4444" />
+            app:tint="#EF4444" />
 
         <ImageButton
             android:id="@+id/btn_info"
@@ -116,7 +116,7 @@
             android:layout_marginHorizontal="25dp"
             android:background="@drawable/bg_circle_btn_info"
             android:src="@drawable/ic_info"
-            android:tint="#3B82F6" />
+            app:tint="#3B82F6" />
 
         <ImageButton
             android:id="@+id/btn_like"
@@ -125,7 +125,7 @@
             android:background="@drawable/bg_circle_btn_like"
             android:elevation="10dp"
             android:src="@drawable/ic_heart_filled"
-            android:tint="@color/text_white" />
+            app:tint="@color/text_white" />
     </LinearLayout>
 
     <include
