@@ -16,20 +16,43 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingHorizontal="30dp">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_person_outline" android:tint="@color/text_slate" android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/nav_profile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_person_outline"
+                app:tint="@color/text_slate"
+                android:layout_weight="1"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"/>
+
             <View android:layout_width="56dp" android:layout_height="56dp" />
-            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_friends" android:tint="@color/text_slate" android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/nav_friends"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_friends"
+                app:tint="@color/text_slate"
+                android:layout_weight="1"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"/>
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <ImageButton
+        android:id="@+id/nav_swipe_action"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/bg_gradient_button"
         android:elevation="10dp"
         android:src="@drawable/ic_cards_stack"
-        android:tint="@color/text_white"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

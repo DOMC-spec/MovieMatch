@@ -1,24 +1,31 @@
 package com.example.moviematch;
 
-public class MovieCard {
-    private String id;
-    private String title;
-    private String year;
-    private String posterUrl;
-    private double rating;
+import com.google.gson.annotations.SerializedName;
 
-    public MovieCard(String id, String title, String year, String posterUrl, double rating) {
-        this.id = id;
-        this.title = title;
-        this.year = year;
-        this.posterUrl = posterUrl;
-        this.rating = rating;
-    }
+public class MovieCard {
+
+    // Аннотация @SerializedName указывает точное имя колонки в БД Supabase
+    @SerializedName("movie_id")
+    private String id;
+
+    @SerializedName("title")
+    private String title;
+
+    @SerializedName("year")
+    private int year; // В БД год хранится как число
+
+    @SerializedName("poster_url")
+    private String posterUrl;
+
+    @SerializedName("global_rating")
+    private double rating;
 
     // Геттеры
     public String getId() { return id; }
     public String getTitle() { return title; }
-    public String getYear() { return year; }
+
+    // Возвращаем год как строку, чтобы адаптеру было проще вставлять его в TextView
+    public String getYear() { return String.valueOf(year); }
     public String getPosterUrl() { return posterUrl; }
     public double getRating() { return rating; }
 }
