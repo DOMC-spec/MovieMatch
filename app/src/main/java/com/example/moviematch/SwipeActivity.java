@@ -127,7 +127,9 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
 
         if (navFriends != null) {
             navFriends.setOnClickListener(v -> {
-                Toast.makeText(this, "Переход к Друзьям/Комнатам", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, FriendsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
             });
         }
 
