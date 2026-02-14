@@ -3,6 +3,7 @@ package com.example.moviematch;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -48,17 +49,29 @@ public class LobbyActivity extends AppCompatActivity {
             });
         }
 
-        // Вызываем метод для настройки аватарки
+        // Кнопка НАЧАТЬ ПОИСК (теперь она точно внутри onCreate!)
+        View btnStartSearch = findViewById(R.id.btn_start_search);
+        if (btnStartSearch != null) {
+            btnStartSearch.setOnClickListener(v -> {
+                Toast.makeText(this, "Поиск запущен! Начинаем игру...", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, SwipeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+
+                finish();
+            });
+        }
+
+        // Вызываем метод для настройки нашей аватарки
         setupCurrentUserSlot();
-    }
+    } // <-- Вот здесь заканчивается onCreate
 
-
+    // Метод для настройки аватарки (находится за пределами onCreate, но внутри класса)
     private void setupCurrentUserSlot() {
-        // Находим самый первый слот
         View userSlot = findViewById(R.id.u1);
 
         if (userSlot != null) {
-            // Ищем элементы по реальным ID из твоего item_lobby_avatar.xml
             View avatarBg = userSlot.findViewById(R.id.avatar_bg);
             TextView userName = userSlot.findViewById(R.id.user_name);
             TextView avatarInitials = userSlot.findViewById(R.id.avatar_initials);
@@ -71,18 +84,15 @@ public class LobbyActivity extends AppCompatActivity {
             }
 
             if (avatarBg != null) {
-                // Применяем фон для текущего пользователя (или bg_slot_filled, если bg_avatar_you нет)
                 avatarBg.setBackgroundResource(R.drawable.bg_avatar_you);
             }
 
             if (avatarInitials != null) {
-                // Делаем текст внутри кружка видимым и пишем "ВЫ"
                 avatarInitials.setVisibility(View.VISIBLE);
                 avatarInitials.setText("ВЫ");
             }
 
             if (adminBadge != null) {
-                // Ты создал комнату, значит ты — Король (Админ)! Делаем бейджик видимым
                 adminBadge.setVisibility(View.VISIBLE);
             }
         }

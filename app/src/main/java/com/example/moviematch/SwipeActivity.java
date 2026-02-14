@@ -1,6 +1,8 @@
 package com.example.moviematch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,62 +27,78 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
     private CardStackView cardStackView;
     private CardStackLayoutManager manager;
     private SwipeAdapter adapter;
-    // Создаем пустой список, который позже заполним данными из БД
     private List<MovieCard> movieList = new ArrayList<>();
+
+    // Переменная для хранения ID текущего пользователя
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
 
+        // Достаем ID пользователя из памяти
+        SharedPreferences prefs = getSharedPreferences("MovieMatchPrefs", Context.MODE_PRIVATE);
+        currentUserId = prefs.getString("user_id", null);
+
         cardStackView = findViewById(R.id.card_stack);
         manager = new CardStackLayoutManager(this, this);
 
-        // Сначала передаем адаптеру пустой список
         adapter = new SwipeAdapter(movieList);
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
 
         setupButtons();
-
-        // Запускаем скачивание фильмов с сервера
         fetchMoviesFromDatabase();
     }
 
-    // --- МЕТОД ДЛЯ РАБОТЫ С БАЗОЙ ДАННЫХ ---
     private void fetchMoviesFromDatabase() {
         SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
-
-        // enqueue выполняет сетевой запрос асинхронно (в фоновом потоке),
-        // чтобы приложение не зависло во время скачивания
         api.getMovies().enqueue(new Callback<List<MovieCard>>() {
             @Override
             public void onResponse(Call<List<MovieCard>> call, Response<List<MovieCard>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Очищаем старый список и добавляем скачанные фильмы
                     movieList.clear();
                     movieList.addAll(response.body());
-
-                    // Говорим адаптеру: "Эй, данные обновились, перерисуй карточки!"
                     adapter.notifyDataSetChanged();
-
-                    Log.d("Supabase", "Успешно загружено фильмов: " + movieList.size());
                 } else {
-                    Log.e("Supabase", "Ошибка ответа сервера: " + response.code());
                     Toast.makeText(SwipeActivity.this, "Ошибка загрузки данных", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<MovieCard>> call, Throwable t) {
-                Log.e("Supabase", "Сетевая ошибка: " + t.getMessage());
                 Toast.makeText(SwipeActivity.this, "Проверьте интернет", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    // --- МЕТОД СОХРАНЕНИЯ ---
+    private void saveSwipeToDatabase(String movieId, String status) {
+        if (currentUserId == null) return; // Защита от ошибок
+
+        SupabaseApi api = SupabaseClient.getClient().create(SupabaseApi.class);
+        // Создаем запись с переданным статусом (PLANNED или DROPPED)
+        LibraryItem item = new LibraryItem(currentUserId, movieId, status);
+
+        api.upsertToLibrary(item).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("MovieMatch", "Свайп сохранен со статусом: " + status);
+                } else {
+                    Log.e("MovieMatch", "Ошибка сохранения свайпа: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("MovieMatch", "Ошибка сети при свайпе: " + t.getMessage());
+            }
+        });
+    }
+
     private void setupButtons() {
-        // Кнопка Лайк
         View btnLike = findViewById(R.id.btn_like);
         if (btnLike != null) {
             btnLike.setOnClickListener(v -> {
@@ -92,7 +110,6 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
             });
         }
 
-        // Кнопка Дизлайк (крестик)
         View btnDislike = findViewById(R.id.btn_dislike);
         if (btnDislike != null) {
             btnDislike.setOnClickListener(v -> {
@@ -104,7 +121,6 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
             });
         }
 
-        // Кнопка Инфо (посередине)
         View btnInfo = findViewById(R.id.btn_info);
         if (btnInfo != null) {
             btnInfo.setOnClickListener(v -> {
@@ -112,7 +128,6 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
             });
         }
 
-        // Кнопки нижней панели (Bottom Navigation)
         View navProfile = findViewById(R.id.nav_profile);
         View navFriends = findViewById(R.id.nav_friends);
         View navSwipe = findViewById(R.id.nav_swipe_action);
@@ -135,7 +150,7 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
 
         if (navSwipe != null) {
             navSwipe.setOnClickListener(v -> {
-                Toast.makeText(this, "Ты уже на экране свайпов!", Toast.LENGTH_SHORT).show();
+                // Ничего не делаем, мы уже тут
             });
         }
     }
@@ -151,9 +166,13 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
 
         if (direction == Direction.Right) {
             Log.d("SwipeActivity", "Лайк: " + swipedMovie.getTitle());
-            // TODO: В будущем добавим сохранение лайка в личную библиотеку
+            // Свайп вправо -> В планах
+            saveSwipeToDatabase(swipedMovie.getId(), "PLANNED");
+
         } else if (direction == Direction.Left) {
             Log.d("SwipeActivity", "Дизлайк: " + swipedMovie.getTitle());
+            // Свайп влево -> Дизлайк (или посмотрел и не понравилось)
+            saveSwipeToDatabase(swipedMovie.getId(), "DROPPED");
         }
 
         if (manager.getTopPosition() == adapter.getItemCount()) {
