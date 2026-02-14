@@ -62,9 +62,12 @@
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btn_create_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="28dp"
                 app:cardElevation="8dp"
                 app:strokeWidth="0dp">
@@ -121,7 +124,38 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/input_room_code"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_search_input"
+                    android:hint="Введи код (например, 48291)"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="#64748B"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_join_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="#334155"
+                    android:text="Войти"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:cornerRadius="16dp" />
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,31 +198,57 @@
             android:paddingHorizontal="30dp">
 
             <LinearLayout
+                android:id="@+id/nav_profile"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical">
-                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_person_outline" app:tint="@color/text_slate" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Профиль" android:textColor="@color/text_slate" android:textSize="10sp" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_person_outline"
+                    app:tint="@color/text_slate" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Профиль"
+                    android:textColor="@color/text_slate"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <View android:layout_width="56dp" android:layout_height="56dp" />
 
             <LinearLayout
+                android:id="@+id/nav_friends"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:orientation="vertical">
-                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_friends" app:tint="@color/accent_indigo" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Друзья" android:textColor="@color/accent_indigo" android:textSize="10sp" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_friends"
+                    app:tint="@color/accent_indigo" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Друзья"
+                    android:textColor="@color/accent_indigo"
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_match"
+        android:id="@+id/nav_swipe_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="35dp"
