@@ -169,8 +169,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
-                    <TextView android:text="Режиссер" android:textColor="@color/text_slate" android:textSize="12sp"/>
-                    <TextView android:text="Дени Вильнёв" android:textColor="@color/text_white" android:textSize="14sp" android:layout_marginTop="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Режиссер"
+                        android:textColor="@color/text_slate"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Дени Вильнёв"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,11 +191,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
-                    <TextView android:text="Сборы" android:textColor="@color/text_slate" android:textSize="12sp"/>
-                    <TextView android:text="$711 млн" android:textColor="@color/text_white" android:textSize="14sp" android:layout_marginTop="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Сборы"
+                        android:textColor="@color/text_slate"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$711 млн"
+                        android:textColor="@color/text_white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"/>
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
