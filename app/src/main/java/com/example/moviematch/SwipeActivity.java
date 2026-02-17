@@ -124,7 +124,25 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
         View btnInfo = findViewById(R.id.btn_info);
         if (btnInfo != null) {
             btnInfo.setOnClickListener(v -> {
-                Toast.makeText(this, "Открытие деталей фильма...", Toast.LENGTH_SHORT).show();
+                // Узнаем, какая карточка сейчас находится на самом верху стопки
+                int currentPosition = manager.getTopPosition();
+
+                // Проверяем, остались ли еще фильмы
+                if (currentPosition < adapter.getItemCount()) {
+                    MovieCard currentMovie = adapter.getMovies().get(currentPosition);
+
+                    // Передаем данные в окно деталей
+                    Intent intent = new Intent(SwipeActivity.this, MovieDetailsActivity.class);
+                    intent.putExtra("title", currentMovie.getTitle());
+                    intent.putExtra("year", currentMovie.getYear());
+                    intent.putExtra("rating", String.valueOf(currentMovie.getRating()));
+                    intent.putExtra("description", currentMovie.getDescription());
+                    intent.putExtra("posterUrl", currentMovie.getPosterUrl());
+
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Фильмы закончились!", Toast.LENGTH_SHORT).show();
+                }
             });
         }
 
