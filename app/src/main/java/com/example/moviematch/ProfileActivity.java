@@ -16,21 +16,65 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        // 1. Достаем никнейм из памяти телефона
         SharedPreferences prefs = getSharedPreferences("MovieMatchPrefs", Context.MODE_PRIVATE);
         String nickname = prefs.getString("nickname", "Гость");
 
-        // 2. Находим текстовые поля на экране
         TextView tvProfileName = findViewById(R.id.tv_profile_name);
         TextView tvProfileTag = findViewById(R.id.tv_profile_tag);
 
-        // 3. Подставляем реальный ник
         if (tvProfileName != null && tvProfileTag != null) {
-            tvProfileName.setText(nickname.toUpperCase()); // Делаем большими буквами, как в дизайне
-            tvProfileTag.setText("@" + nickname.toLowerCase()); // Делаем маленькими с собачкой
+            tvProfileName.setText(nickname.toUpperCase());
+            tvProfileTag.setText("@" + nickname.toLowerCase());
         }
 
         setupBottomNavigation();
+        setupStats(); // Вызываем настройку статистики
+    }
+
+    private void setupStats() {
+        // Находим 4 кружочка по ID
+        View statFollowers = findViewById(R.id.stat_followers);
+        View statFollowing = findViewById(R.id.stat_following);
+        View statWatched = findViewById(R.id.stat_watched);
+        View statPlanned = findViewById(R.id.stat_planned);
+
+        // Настраиваем "Подписчики"
+        if (statFollowers != null) {
+            ((TextView) statFollowers.findViewById(R.id.stat_number)).setText("42");
+            ((TextView) statFollowers.findViewById(R.id.stat_label)).setText("Подписчики");
+        }
+
+        // Настраиваем "Подписки"
+        if (statFollowing != null) {
+            ((TextView) statFollowing.findViewById(R.id.stat_number)).setText("15");
+            ((TextView) statFollowing.findViewById(R.id.stat_label)).setText("Подписки");
+        }
+
+        // Настраиваем "Просмотрено"
+        if (statWatched != null) {
+            ((TextView) statWatched.findViewById(R.id.stat_number)).setText("128");
+            ((TextView) statWatched.findViewById(R.id.stat_label)).setText("Просмотрено");
+
+            // Клик открывает Библиотеку (вкладка 1)
+            statWatched.setOnClickListener(v -> {
+                Intent intent = new Intent(this, LibraryActivity.class);
+                intent.putExtra("TAB_INDEX", 1);
+                startActivity(intent);
+            });
+        }
+
+        // Настраиваем "В планах"
+        if (statPlanned != null) {
+            ((TextView) statPlanned.findViewById(R.id.stat_number)).setText("56");
+            ((TextView) statPlanned.findViewById(R.id.stat_label)).setText("В планах");
+
+            // Клик открывает Библиотеку (вкладка 0)
+            statPlanned.setOnClickListener(v -> {
+                Intent intent = new Intent(this, LibraryActivity.class);
+                intent.putExtra("TAB_INDEX", 0);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupBottomNavigation() {
@@ -45,13 +89,11 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
-
         if (navProfile != null) {
             navProfile.setOnClickListener(v -> {
-                Toast.makeText(this, "Ты уже в Профиле!", Toast.LENGTH_SHORT).show();
+                // Мы уже в профиле
             });
         }
-
         if (navFriends != null) {
             navFriends.setOnClickListener(v -> {
                 Intent intent = new Intent(this, FriendsActivity.class);

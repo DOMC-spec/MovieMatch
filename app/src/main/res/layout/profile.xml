@@ -77,10 +77,10 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <include layout="@layout/item_stat_bubble" />
-                <include layout="@layout/item_stat_bubble" />
-                <include layout="@layout/item_stat_bubble" />
-                <include layout="@layout/item_stat_bubble" />
+                <include android:id="@+id/stat_followers" layout="@layout/item_stat_bubble" />
+                <include android:id="@+id/stat_following" layout="@layout/item_stat_bubble" />
+                <include android:id="@+id/stat_watched" layout="@layout/item_stat_bubble" />
+                <include android:id="@+id/stat_planned" layout="@layout/item_stat_bubble" />
             </LinearLayout>
 
             <TextView
