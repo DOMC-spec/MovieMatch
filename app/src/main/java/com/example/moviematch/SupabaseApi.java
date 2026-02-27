@@ -34,4 +34,8 @@ public interface SupabaseApi {
     @POST("user_library?on_conflict=user_id,movie_id")
     @Headers("Prefer: resolution=merge-duplicates")
     Call<Void> upsertToLibrary(@Body LibraryItem item);
+
+    // ПОЛУЧИТЬ библиотеку пользователя ВМЕСТЕ с данными фильмов (JOIN-запрос)
+    @GET("user_library?select=*,movies(*)")
+    Call<List<LibraryItemResponse>> getUserLibrary(@Query("user_id") String userIdQuery);
 }
