@@ -105,6 +105,19 @@
             android:elevation="10dp"
             android:src="@drawable/ic_heart_filled"
             app:tint="@color/text_white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_matches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/ic_star"
+            app:backgroundTint="#1E293B"
+            app:borderWidth="1dp"
+            app:elevation="4dp"
+            app:fabSize="mini"
+            app:tint="@color/rating_gold" />
     </LinearLayout>
 
     <include
