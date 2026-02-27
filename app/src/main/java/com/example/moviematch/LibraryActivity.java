@@ -149,3 +149,4 @@ public class LibraryActivity extends AppCompatActivity {
         if (navFriends != null) navFriends.setOnClickListener(v -> { Intent intent = new Intent(this, FriendsActivity.class); intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT); startActivity(intent); });
     }
 }
+//вком
