@@ -99,6 +99,15 @@ public class SwipeActivity extends AppCompatActivity implements CardStackListene
     }
 
     private void setupButtons() {
+        // Кнопка Совпадения (справа от кнопки лайка)
+        View btnMatches = findViewById(R.id.btn_matches);
+        if (btnMatches != null) {
+            btnMatches.setOnClickListener(v -> {
+                Intent intent = new Intent(SwipeActivity.this, MatchesActivity.class);
+                startActivity(intent);
+            });
+        }
+
         View btnLike = findViewById(R.id.btn_like);
         if (btnLike != null) {
             btnLike.setOnClickListener(v -> {
